@@ -3,7 +3,7 @@ title: "An Extensible Markdown Publisher Pirated by Steven"
 excerpt: "Where is my coffee?"
 ---
 
-## [[librarysystem|How it works]]
+## [[librarysystem]]
 ![[librarysystem]]
 
 ### Help 
