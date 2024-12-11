@@ -10,11 +10,22 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Markdown Repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ env.BLOG_REPO }}
+      - name: Install obsidian-export
+        run: |
+          wget https://github.com/zoni/obsidian-export/releases/download/v22.11.0/obsidian-export_Linux-x86_64.bin
+          chmod +x obsidian-export_Linux-x86_64.bin
+      - name: Run obsidian-export
+        run: |
+          rm -rf common_md && mkdir common_md
+          ./obsidian-export_Linux-x86_64.bin ${{ env.PUBLISH_DIR }} common_md
       - name: Deploy Vercel
         uses: amondnet/vercel-action@v20
         with:
-          # TODO: Update Github Secrets with values
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }} # Required
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }} # Required
-          vercel-args: "--prod" #Optional
+          vercel-args: "--prod" # Optional
