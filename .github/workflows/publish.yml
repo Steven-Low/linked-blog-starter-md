@@ -1,7 +1,7 @@
 name: Publish Markdown Files
 env:
   BLOG_REPO: Steven-Low/linked-blog-starter-md
-  PUBLISH_DIR: common_md
+  PUBLISH_DIR: publish
 on:
   workflow_dispatch:
   push:
