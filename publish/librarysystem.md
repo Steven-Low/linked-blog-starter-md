@@ -1,3 +1,7 @@
+---
+title: LibrarySystem
+---
+
 # 关于 LibrarySystem 代码笔记
 
 首先，`CREATE TABLE` 大家都知道，随便一把 Queries 就通关了。唯一的难度是要确定 `CREATE` 的顺序，因为有 `foreign key`。可以参考一下图 2.0。
