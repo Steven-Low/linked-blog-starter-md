@@ -125,7 +125,7 @@ foreign key fk_Fine_ID(Fine_ID) references Fine(Fine_ID)
 ### 如何判断 `CREATE TABLE` 顺序?
  通常只要确保 `Create` 的顺序先是 **没有** `foreign key` 的 `TABLE`, 然后才是有 `foreign key` 但**同时又是**其他人的 `foreign key` 的（比如 `User，Fine`）， 最后才到最多`foreign key` 的 (如`Reservation`)。
 ##### 图 2.0 （可能与以上代码不同顺序)
-![Figure 2](image.png)
+![Figure 2](attachments/image.png)
 
 ---
 
