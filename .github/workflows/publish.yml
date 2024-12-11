@@ -1,6 +1,6 @@
 name: Publish Markdown Files
 env:
-  BLOG_REPO: Steven-Low/linked-blog-starter-md
+  BLOG_REPO: Steven-Low/linked-blog-starter
   PUBLISH_DIR: publish
 on:
   workflow_dispatch:
@@ -10,9 +10,14 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Markdown Repository
+      - name: Checkout
         uses: actions/checkout@v3
         with:
+          path: temp_md
+      - name: Checkout linked blog starter repo
+        uses: actions/checkout@v3
+        with:
+          path: temp_blog
           repository: ${{ env.BLOG_REPO }}
       - name: Install obsidian-export
         run: |
@@ -20,12 +25,18 @@ jobs:
           chmod +x obsidian-export_Linux-x86_64.bin
       - name: Run obsidian-export
         run: |
-          rm -rf common_md && mkdir common_md
-          ./obsidian-export_Linux-x86_64.bin ${{ env.PUBLISH_DIR }} common_md
+          rm -rf temp_blog/common_md && mkdir temp_blog/common_md
+          ./obsidian-export_Linux-x86_64.bin ./temp_md/${{ env.PUBLISH_DIR }} temp_blog/common_md
+      - name: Move blog dir to currDir
+        run: |
+          cp -r temp_blog/. .
+          rm -rf temp_blog
+          rm -rf temp_md
       - name: Deploy Vercel
         uses: amondnet/vercel-action@v20
         with:
+          # TODO: Update Github Secrets with values
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }} # Required
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }} # Required
-          vercel-args: "--prod" # Optional
+          vercel-args: "--prod" #Optional
